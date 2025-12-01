@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create("app_settings", function (Blueprint $table) {
+            $table->id();
+            $table->string("whatsapp_number");
+            $table->string("google_maps_url");
+            $table->json("social_media");
+            $table->json("time_operational");
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists("app_settings");
+    }
+};
