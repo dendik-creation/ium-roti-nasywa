@@ -19,7 +19,7 @@ class AuthController extends Controller
             return Inertia::location("/auth/signin");
         }
         Session::flash("success", "Login berhasil");
-        return Inertia::location("/dashboard");
+        return Inertia::location("/admin/dashboard");
     }
 
     public function signInView()
@@ -31,15 +31,20 @@ class AuthController extends Controller
 
     public function signIn(Request $request)
     {
-        $credentials = $request->validate([
-            "username" => "required",
-            "password" => "required",
-        ]);
+        $credentials = $request->validate(
+            [
+                "email" => "required|email",
+                "password" => "required",
+            ],
+            [
+                "email.email" => "Format email tidak valid",
+            ],
+        );
 
-        $user = User::where("username", $credentials["username"])->first();
+        $user = User::where("email", $credentials["email"])->first();
         if (!$user || !Hash::check($credentials["password"], $user->password)) {
             return back()->withErrors([
-                "message" => "Username atau password salah",
+                "message" => "Email atau password salah",
             ]);
         }
 

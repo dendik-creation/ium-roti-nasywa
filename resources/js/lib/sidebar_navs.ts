@@ -1,4 +1,11 @@
-import { Grid2X2, LucideProps } from "lucide-react";
+import {
+    Bubbles,
+    Grid2X2,
+    LucideProps,
+    Package,
+    PackageSearch,
+    Settings,
+} from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 export type NavItems = {
@@ -14,8 +21,32 @@ const sidebarNavs: NavItems = [
     {
         type: "item",
         title: "Dashboard",
-        url: "/dashboard",
+        url: "/admin/dashboard",
         icon: Grid2X2,
+    },
+    {
+        type: "item",
+        title: "Kategori Produk",
+        url: "/admin/category",
+        icon: PackageSearch,
+    },
+    {
+        type: "item",
+        title: "Kategori",
+        url: "/admin/product",
+        icon: Package,
+    },
+    {
+        type: "item",
+        title: "Testimoni",
+        url: "/admin/testimonial",
+        icon: Bubbles,
+    },
+    {
+        type: "item",
+        title: "Pengaturan",
+        url: "/admin/setting",
+        icon: Settings,
     },
 ];
 

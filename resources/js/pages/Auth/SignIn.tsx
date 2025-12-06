@@ -11,13 +11,13 @@ import {
 import { ErrorInput } from "@/components/custom/FormElement";
 import { Toaster } from "react-hot-toast";
 import BlastToaster from "@/components/custom/BlastToaster";
-import { Key, Loader, LogIn, User } from "lucide-react";
+import { Key, Loader, LogIn, Mail } from "lucide-react";
 import { useEffect } from "react";
 
 export default function SignIn({ app_name }: { app_name: string }) {
     const { flash } = usePage().props as any;
     const { data, setData, post, processing, errors, setError } = useForm({
-        username: "",
+        email: "",
         password: "",
     });
 
@@ -32,9 +32,9 @@ export default function SignIn({ app_name }: { app_name: string }) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!data.username) setError("username", "Masukkan username");
+        if (!data.email) setError("email", "Masukkan email");
         if (!data.password) setError("password", "Masukkan password");
-        if (!data.username || !data.password) return;
+        if (!data.email || !data.password) return;
         post("/auth/signin", {
             preserveScroll: true,
             replace: true,
@@ -71,25 +71,23 @@ export default function SignIn({ app_name }: { app_name: string }) {
                             <div className="relative">
                                 <div className="flex items-center">
                                     <span className="absolute left-3 text-gray-500">
-                                        <User />
+                                        <Mail />
                                     </span>
                                     <Input
-                                        type="text"
-                                        placeholder="Username"
+                                        type="email"
+                                        placeholder="Email"
                                         autoFocus={true}
-                                        value={data.username}
+                                        value={data.email}
                                         onChange={(e) =>
-                                            setData("username", e.target.value)
+                                            setData("email", e.target.value)
                                         }
                                         className={`pl-10 py-6 ${
-                                            errors.username
-                                                ? "border-red-500"
-                                                : ""
+                                            errors.email ? "border-red-500" : ""
                                         }`}
                                     />
                                 </div>
-                                {errors.username && (
-                                    <ErrorInput error={errors.username} />
+                                {errors.email && (
+                                    <ErrorInput error={errors.email} />
                                 )}
                             </div>
                             <div className="relative">

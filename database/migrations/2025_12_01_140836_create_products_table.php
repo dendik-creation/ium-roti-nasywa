@@ -18,7 +18,7 @@ return new class extends Migration {
             $table
                 ->foreignId("category_id")
                 ->constrained("product_categories")
-                ->onDelete("cascade");
+                ->nullOnDelete();
             $table->timestamps();
         });
     }
