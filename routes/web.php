@@ -2,8 +2,8 @@
     use App\Http\Controllers\Admin\AppSettingController;
     use Illuminate\Support\Facades\Route;
     // Global Controllers
-    use App\Http\Controllers\global\AuthController;
-    use App\Http\Controllers\global\LandingController;
+    use App\Http\Controllers\Global\AuthController;
+    use App\Http\Controllers\Global\LandingController;
     // Admin Controllers
     use App\Http\Controllers\Admin\ProductCategoryController;
     use App\Http\Controllers\Admin\ProductController;
