@@ -3,7 +3,6 @@ import { PageTitleProps } from "@/Partials/PageTitle";
 export type AppSetting = {
     id: number;
     whatsapp_number: string;
-    google_maps_url: string;
     social_media: SocialMedia[];
     time_operational: string;
 };

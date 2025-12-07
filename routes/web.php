@@ -3,16 +3,18 @@
     use Illuminate\Support\Facades\Route;
     // Global Controllers
     use App\Http\Controllers\global\AuthController;
+    use App\Http\Controllers\global\LandingController;
     // Admin Controllers
     use App\Http\Controllers\Admin\ProductCategoryController;
     use App\Http\Controllers\Admin\ProductController;
     use App\Http\Controllers\Admin\TestimonialController;
     use App\Http\Controllers\Admin\DashboardController;
 
-    Route::get("/", [AuthController::class, "signedInStatus"])->name("login");
+    Route::get("/", [LandingController::class, "index"])->name("index");
+    Route::post("/testimonial", [LandingController::class, "storeTestimonial"])->name("landing.testimonial.store");
     Route::prefix("auth")->group(function () {
         Route::get("/signin", [AuthController::class, "signInView"])
-            ->name("auth.signin.index")
+            ->name("login")
             ->middleware("guest");
 
         Route::post("/signin", [AuthController::class, "signIn"])

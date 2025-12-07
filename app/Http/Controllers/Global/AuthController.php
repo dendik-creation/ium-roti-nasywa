@@ -12,18 +12,17 @@ use Inertia\Inertia;
 
 class AuthController extends Controller
 {
-    public function signedInStatus(Request $request)
+    private function hasSignedIn()
     {
-        $auth = Auth::user();
-        if (!$auth) {
-            return Inertia::location("/auth/signin");
+        if (Auth::check()) {
+            return Inertia::location("/admin/dashboard");
         }
-        Session::flash("success", "Login berhasil");
-        return Inertia::location("/admin/dashboard");
+        return true;
     }
 
     public function signInView()
     {
+        $this->hasSignedIn();
         return Inertia::render("Auth/SignIn", [
             "app_name" => config("app.name"),
         ]);
@@ -49,7 +48,7 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt($credentials)) {
-            return Inertia::location("/");
+            return Inertia::location("/admin/dashboard");
         }
 
         return back()->withErrors([

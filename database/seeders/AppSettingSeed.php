@@ -15,7 +15,6 @@ class AppSettingSeed extends Seeder
     {
         AppSetting::create([
             "whatsapp_number" => "081325059037",
-            "google_maps_url" => "https://maps.app.goo.gl/dRL3erYZxv2xbVgA6",
             "social_media" => json_encode([
                 [
                     "platform" => "INSTAGRAM",
