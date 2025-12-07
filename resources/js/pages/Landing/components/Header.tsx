@@ -28,7 +28,7 @@ export default function Header({
         { name: "Beranda", href: "#home" },
         { name: "Tentang", href: "#about" },
         { name: "Produk", href: "#products" },
-        { name: "Kustom Pesanan", href: "#custom-order" },
+        { name: "Pesanan Kustom", href: "#custom-order" },
         { name: "Kontak", href: "#contact" },
     ];
 

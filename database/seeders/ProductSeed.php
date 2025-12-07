@@ -24,5 +24,10 @@ class ProductSeed extends Seeder
             "description" =>
                 "Produk bakery yang baru dipanggang setiap hari: roti, pastry, dan kudapan segar berkualitas.",
         ]);
+        ProductCategory::create([
+            "name" => "Brownies",
+            "description" =>
+                "Brownies empuk dan fudgy dengan berbagai topping dan isian yang menggoda selera.",
+        ]);
     }
 }

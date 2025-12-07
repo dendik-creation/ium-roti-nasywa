@@ -42,13 +42,19 @@ export default function Checkout({
                         item.product.price * item.quantity
                     ).toLocaleString("id-ID")})`
             )
-            .join("%0A");
+            .join("\n");
 
-        const message = `Halo Nasywa Cake & Bakery, saya ingin memesan:%0A%0A${itemsList}%0A%0ATotal: Rp ${total.toLocaleString(
-            "id-ID"
-        )}%0A%0AData Pemesan:%0ANama: ${formData.name}%0ANo. HP: ${
-            formData.phone
-        }%0AAlamat: ${formData.address}%0ACatatan: ${formData.notes}`;
+        const message =
+            `Halo Kak Admin Nasywa Cake & Bakery! 👋\n\n` +
+            `Saya ingin memesan beberapa roti/kue enak dari Nasywa. Berikut daftar pesanan saya:\n\n` +
+            `${itemsList}\n\n` +
+            `💰 Total Pesanan: Rp ${total.toLocaleString("id-ID")}\n\n` +
+            `Mohon dibantu proses ya Kak. Ini data pengiriman saya:\n` +
+            `👤 Nama: ${formData.name}\n` +
+            `📱 No. HP: ${formData.phone}\n` +
+            `📍 Alamat: ${formData.address}\n` +
+            `📝 Catatan: ${formData.notes || "-"}\n\n` +
+            `Terima kasih! Ditunggu konfirmasinya ya Kak 🙏`;
 
         const phoneNumber = appSetting?.whatsapp_number || "6281234567890"; // Fallback
         // Ensure phone number format is correct for WA link (remove leading 0 or +, add 62)
@@ -58,10 +64,10 @@ export default function Checkout({
             .replace(/^0/, "62")
             .replace(/\D/g, "");
 
-        window.open(
-            `https://wa.me/${formattedPhone}?text=${message}`,
-            "_blank"
-        );
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodedMessage}&type=phone_number&app_absent=0`;
+
+        window.open(whatsappUrl, "_blank");
         onClearCart();
         onClose();
     };

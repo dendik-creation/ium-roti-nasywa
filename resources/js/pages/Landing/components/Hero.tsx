@@ -20,9 +20,7 @@ export default function Hero() {
             <div className="relative z-10 container mx-auto px-4 text-center text-white">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
                     Setiap Gigitan, <br />
-                    <span className="text-[#D4A373]">
-                        Cerita Manis Nasywa Cake & Bakery.
-                    </span>
+                    <span className="text-[#D4A373]">Cerita Manis Nasywa.</span>
                 </h1>
                 <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-200">
                     Dari dapur kami ke meja Anda, selalu ada manis yang bisa

@@ -19,21 +19,23 @@ export default function CustomCheckout({ appSetting }: CustomCheckoutProps) {
         e.preventDefault();
 
         const message =
-            `Halo Nasywa Cake & Bakery, saya ingin memesan custom:%0A%0A` +
-            `Nama: ${formData.name}%0A` +
-            `No. HP: ${formData.phone}%0A` +
-            `Tanggal Diperlukan: ${formData.date}%0A` +
-            `Detail Pesanan: ${formData.description}`;
+            `Halo Kak Admin Nasywa Cake & Bakery! 👋\n\n` +
+            `Saya tertarik untuk memesan kue custom untuk acara spesial saya. Berikut detailnya ya Kak:\n\n` +
+            `👤 Nama: ${formData.name}\n` +
+            `📱 No. WhatsApp: ${formData.phone}\n` +
+            `📅 Tanggal Acara: ${formData.date}\n` +
+            `📝 Detail Request: ${formData.description}\n\n` +
+            `Mohon infonya apakah bisa diproses? Terima kasih sebelumnya! 🙏`;
 
         const phoneNumber = appSetting?.whatsapp_number || "6281234567890";
         const formattedPhone = phoneNumber
             .replace(/^0/, "62")
             .replace(/\D/g, "");
 
-        window.open(
-            `https://wa.me/${formattedPhone}?text=${message}`,
-            "_blank"
-        );
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodedMessage}&type=phone_number&app_absent=0`;
+
+        window.open(whatsappUrl, "_blank");
     };
 
     return (
@@ -62,7 +64,7 @@ export default function CustomCheckout({ appSetting }: CustomCheckoutProps) {
                     {/* Form Side */}
                     <div className="w-full md:w-1/2 p-8 md:p-12">
                         <h2 className="text-2xl font-bold text-[#2A1E12] mb-6">
-                            Form Pesanan Custom
+                            Form Pesanan Kustom
                         </h2>
                         <form onSubmit={handleSubmit} className="space-y-5">
                             <div>

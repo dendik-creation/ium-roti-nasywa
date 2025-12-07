@@ -50,12 +50,12 @@ export default function Testimonial({ testimonials }: TestimonialProps) {
                                 <div className="w-10 h-10 bg-[#E8B888] rounded-full flex items-center justify-center text-white font-bold text-lg">
                                     {item.customer_name.charAt(0)}
                                 </div>
-                                <div>
-                                    <h4 className="font-bold text-[#2A1E12]">
+                                <div className="flex flex-col">
+                                    <p className="font-bold text-[#2A1E12]">
                                         {item.customer_name}
-                                    </h4>
+                                    </p>
                                     <span className="text-xs text-gray-500">
-                                        Pelanggan Setia
+                                        Pelanggan Kami
                                     </span>
                                 </div>
                             </div>

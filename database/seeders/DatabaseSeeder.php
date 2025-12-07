@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeed::class,
             ProductSeed::class,
             AppSettingSeed::class,
+            TestimoniSeed::class,
         ]);
     }
 }
