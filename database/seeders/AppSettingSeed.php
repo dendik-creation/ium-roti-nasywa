@@ -14,8 +14,7 @@ class AppSettingSeed extends Seeder
     public function run(): void
     {
         AppSetting::create([
-            // "whatsapp_number" => config("custom.default.whatsapp_number"),
-            "whatsapp_number" => "085702218214",
+            "whatsapp_number" => config("custom.default.whatsapp_number"),
             "social_media" => json_encode([
                 [
                     "platform" => "INSTAGRAM",

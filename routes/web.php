@@ -24,6 +24,12 @@
     Route::post("/auth/signout", [AuthController::class, "signOut"])
         ->middleware("auth")
         ->name("auth.signout.store");
+    Route::post("/auth/change-password", [
+        AuthController::class,
+        "changePassword",
+    ])
+        ->middleware("auth")
+        ->name("auth.change-password.store");
 
     Route::prefix("admin")
         ->middleware("auth")

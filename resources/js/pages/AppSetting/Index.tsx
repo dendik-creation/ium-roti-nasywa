@@ -1,5 +1,4 @@
 import { ErrorInput, SelectSearchInput } from "@/components/custom/FormElement";
-import { convertMapsUrlToEmbed } from "@/components/helper/helper";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -45,7 +44,7 @@ const AppSettingIndex = ({
     const handleChange = (
         e: React.ChangeEvent<
             HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >,
+        >
     ) => {
         const { name, value } = e.target;
         setData(name as keyof typeof data, value);
@@ -73,7 +72,7 @@ const AppSettingIndex = ({
             if (!item.platform || item.platform.trim() === "") {
                 setError(
                     `social_media.${index}.platform`,
-                    `Platform wajib diisi`,
+                    `Platform wajib diisi`
                 );
                 valid = false;
             }
@@ -125,7 +124,7 @@ const AppSettingIndex = ({
                             value={data.whatsapp_number ?? ""}
                             onChange={handleChange}
                             className={cn(
-                                errors.whatsapp_number && "border-red-500",
+                                errors.whatsapp_number && "border-red-500"
                             )}
                         />
                         {errors.whatsapp_number && (
@@ -147,7 +146,7 @@ const AppSettingIndex = ({
                             value={data.time_operational ?? ""}
                             onChange={handleChange}
                             className={cn(
-                                errors.time_operational && "border-red-500",
+                                errors.time_operational && "border-red-500"
                             )}
                         />
                         {errors.time_operational && (
@@ -192,14 +191,14 @@ const AppSettingIndex = ({
                                                     value as SocialMedia["platform"];
                                                 setData(
                                                     "social_media",
-                                                    updatedSocialMedia,
+                                                    updatedSocialMedia
                                                 );
                                             }}
                                             placeholder="Pilih platform"
                                             className={cn(
                                                 errors[
                                                     `social_media.${index}.platform`
-                                                ] && "border-red-500",
+                                                ] && "border-red-500"
                                             )}
                                         />
                                         {errors[
@@ -227,13 +226,13 @@ const AppSettingIndex = ({
                                                     e.target.value;
                                                 setData(
                                                     "social_media",
-                                                    updatedSocialMedia,
+                                                    updatedSocialMedia
                                                 );
                                             }}
                                             className={cn(
                                                 errors[
                                                     `social_media.${index}.url`
-                                                ] && "border-red-500",
+                                                ] && "border-red-500"
                                             )}
                                         />
                                         {errors[
@@ -256,6 +255,7 @@ const AppSettingIndex = ({
                                             }
                                             variant={"red"}
                                             size={"icon"}
+                                            className="w-full"
                                         >
                                             <Trash2 />
                                         </Button>

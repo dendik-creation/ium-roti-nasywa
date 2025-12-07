@@ -16,6 +16,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import EmptyTable from "@/components/custom/EmptyTable";
+import { Button } from "@/components/ui/button";
 
 const TestimonialIndex = ({
     title,
@@ -45,7 +46,7 @@ const TestimonialIndex = ({
                 preserveState: true,
                 replace: true,
                 only: ["testimonials"],
-            },
+            }
         );
     });
 
@@ -81,6 +82,11 @@ const TestimonialIndex = ({
                             }
                         />
                     </div>
+                    {filterData.rating && (
+                        <Button variant={"yellow"} size={"sm"}>
+                            Reset Rating
+                        </Button>
+                    )}
                 </div>
             </div>
 

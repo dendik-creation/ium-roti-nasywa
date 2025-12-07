@@ -11,6 +11,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SignoutMenu from "@/components/custom/SignoutMenu";
+import ChangePasswordMenu from "@/components/custom/ChangePasswordMenu";
 interface AppHeaderProps {
     classNames?: string;
     name: string;
@@ -46,7 +47,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ classNames, name, role }) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end">
                     <DropdownMenuGroup>
-                        {/* Custom Dropdown Menu */}
+                        <ChangePasswordMenu />
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <SignoutMenu />
