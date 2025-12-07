@@ -25,15 +25,8 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Calendar } from "@/components/ui/calendar";
-import { registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import { SelectOption } from "@/types/global";
 import { ymdToIdDate } from "../helper/helper";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-
-registerPlugin(FilePondPluginFileValidateType);
 
 type ErrorInputProps = {
     error: string | null;
@@ -744,25 +737,5 @@ export const PaginatorBuilder = ({
                 </PaginationItem>
             </PaginationContent>
         </Pagination>
-    );
-};
-
-export const RichTextEditorInput = ({
-    value,
-    onChange,
-    placeholder = "Tulis sesuatu...",
-    className,
-    disabled = false,
-}: RichTextEditorInputProps) => {
-    return (
-        <div className={className}>
-            <ReactQuill
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-                readOnly={disabled}
-                theme="snow"
-            />
-        </div>
     );
 };

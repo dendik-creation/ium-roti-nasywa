@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string("name");
             $table->text("description")->nullable();
             $table->integer("price");
+            $table->json("images");
             $table
                 ->foreignId("category_id")
                 ->constrained("product_categories")

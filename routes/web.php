@@ -1,5 +1,6 @@
     <?php
     use App\Http\Controllers\Admin\ProductCategoryController;
+    use App\Http\Controllers\Admin\ProductController;
     use App\Http\Controllers\DashboardController;
     use Illuminate\Support\Facades\Route;
     // Global Controllers
@@ -45,6 +46,23 @@
                     ProductCategoryController::class,
                     "destroy",
                 ])->name("category.delete");
+            });
+
+            // Product
+            Route::prefix("/product")->group(function () {
+                Route::get("/", [ProductController::class, "index"])->name(
+                    "product.index",
+                );
+                Route::post("/", [ProductController::class, "store"])->name(
+                    "product.store",
+                );
+                Route::put("/{id}", [ProductController::class, "update"])->name(
+                    "product.update",
+                );
+                Route::delete("/{id}", [
+                    ProductController::class,
+                    "destroy",
+                ])->name("product.delete");
             });
         });
 

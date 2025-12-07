@@ -2,10 +2,7 @@ import { PaginatorBuilder, SearchInput } from "@/components/custom/FormElement";
 import { handleElipsisText, inputDebounce } from "@/components/helper/helper";
 import AppLayout from "@/partials/AppLayout";
 import { PageTitle } from "@/Partials/PageTitle";
-import {
-    ProductCategory,
-    ProductCategoryIndexProps,
-} from "@/types/product_category";
+import { ProductCategoryIndexProps } from "@/types/product_category";
 import { router, useForm } from "@inertiajs/react";
 import { useEffect, useRef } from "react";
 import {
@@ -18,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import EmptyTable from "@/components/custom/EmptyTable";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import {
     Tooltip,
     TooltipContent,
@@ -106,17 +103,19 @@ const ProductCategoryIndex = ({
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {categories.data.map((category, index) => (
+                        {categories.data.map((category: any, index: number) => (
                             <TableRow key={category.id}>
                                 <TableCell>{index + 1}</TableCell>
                                 <TableCell>{category.name}</TableCell>
                                 <TableCell>
                                     <Tooltip delayDuration={200}>
-                                        <TooltipTrigger>
-                                            {handleElipsisText(
-                                                category.description || "",
-                                                60,
-                                            )}
+                                        <TooltipTrigger asChild>
+                                            <span>
+                                                {handleElipsisText(
+                                                    category.description || "",
+                                                    60,
+                                                )}
+                                            </span>
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             <p>{category.description || ""}</p>

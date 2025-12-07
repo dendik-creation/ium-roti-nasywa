@@ -32,7 +32,7 @@ const sidebarNavs: NavItems = [
     },
     {
         type: "item",
-        title: "Kategori",
+        title: "Produk",
         url: "/admin/product",
         icon: Package,
     },

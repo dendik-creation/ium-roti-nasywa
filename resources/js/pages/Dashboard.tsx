@@ -1,5 +1,5 @@
 import AppLayout from "@/partials/AppLayout";
-import { PageTitle, PageTitleProps } from "@/partials/PageTitle copy";
+import { PageTitle, PageTitleProps } from "@/partials/PageTitle";
 
 type AdminDashboardProps = PageTitleProps & {};
 

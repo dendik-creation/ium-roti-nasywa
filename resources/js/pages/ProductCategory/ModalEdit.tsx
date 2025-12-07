@@ -55,9 +55,11 @@ const ModalCategoryEdit = ({ category }: { category: ProductCategory }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button size={"icon"} variant={"blue"}>
-                    <Pencil />
-                </Button>
+                <span>
+                    <Button size={"icon"} variant={"blue"}>
+                        <Pencil />
+                    </Button>
+                </span>
             </DialogTrigger>
             <DialogContent className="sm:max-w-7xl">
                 <DialogHeader>
