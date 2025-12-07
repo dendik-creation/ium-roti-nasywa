@@ -1,10 +1,12 @@
     <?php
-    use App\Http\Controllers\Admin\ProductCategoryController;
-    use App\Http\Controllers\Admin\ProductController;
-    use App\Http\Controllers\DashboardController;
     use Illuminate\Support\Facades\Route;
     // Global Controllers
     use App\Http\Controllers\global\AuthController;
+    // Admin Controllers
+    use App\Http\Controllers\Admin\ProductCategoryController;
+    use App\Http\Controllers\Admin\ProductController;
+    use App\Http\Controllers\Admin\TestimonialController;
+    use App\Http\Controllers\Admin\DashboardController;
 
     Route::get("/", [AuthController::class, "signedInStatus"])->name("login");
     Route::prefix("auth")->group(function () {
@@ -63,6 +65,13 @@
                     ProductController::class,
                     "destroy",
                 ])->name("product.delete");
+            });
+
+            // Testimonial
+            Route::prefix("/testimonial")->group(function () {
+                Route::get("/", [TestimonialController::class, "index"])->name(
+                    "testimonial.index",
+                );
             });
         });
 

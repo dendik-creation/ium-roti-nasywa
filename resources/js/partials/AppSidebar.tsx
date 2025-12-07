@@ -17,11 +17,13 @@ export default function AppSidebar({ role }: { role: string }) {
     const items = sidebarNavs;
     return (
         <Sidebar>
-            <SidebarContent className="bg-amber-200 min-h-full relative h-full flex flex-col">
+            <SidebarContent className="bg-[#A46E1C] min-h-full relative h-full flex flex-col">
                 <SidebarHeader className="mt-3 ms-3 gap-0">
-                    <span className="text-black/80 font-bold">Roti Nasywa</span>
-                    <span className="text-black/60 text-sm font-normal">
-                        Konfigurasi website
+                    <span className="text-white/80 text-xl font-bold">
+                        Sistem Konfigurasi
+                    </span>
+                    <span className="text-white/60 text-sm font-normal">
+                        Website Roti Nasywa
                     </span>
                 </SidebarHeader>
                 <SidebarGroup>
@@ -31,12 +33,12 @@ export default function AppSidebar({ role }: { role: string }) {
                                 if (item.type === "splitter") {
                                     return (
                                         <SidebarMenuItem
-                                            className="border-b border-slate-700 mt-2"
+                                            className="border-b border-white/70 mt-2"
                                             key={item.title}
                                         >
                                             <SidebarMenuButton
                                                 disabled
-                                                className="text-black uppercase text-xs"
+                                                className="text-white uppercase text-xs"
                                             >
                                                 <ArrowBigRightDash />
                                                 {item.title}
@@ -47,7 +49,7 @@ export default function AppSidebar({ role }: { role: string }) {
                                     const Icon = item.icon;
                                     return (
                                         <SidebarMenuItem
-                                            className="text-black/80 transition-all mb-0.5"
+                                            className="text-white/80 transition-all mb-0.5"
                                             key={item.title}
                                         >
                                             <SidebarMenuButton

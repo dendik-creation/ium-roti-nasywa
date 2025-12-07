@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import EmptyTable from "@/components/custom/EmptyTable";
-import { Eye, Image, Pencil, Trash2 } from "lucide-react";
+import { Image, Trash2 } from "lucide-react";
 import {
     Tooltip,
     TooltipContent,

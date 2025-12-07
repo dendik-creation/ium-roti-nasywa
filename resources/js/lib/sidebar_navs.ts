@@ -25,6 +25,11 @@ const sidebarNavs: NavItems = [
         icon: Grid2X2,
     },
     {
+        type: "splitter",
+        title: "Data Master",
+        url: "#",
+    },
+    {
         type: "item",
         title: "Kategori Produk",
         url: "/admin/category",
@@ -37,14 +42,19 @@ const sidebarNavs: NavItems = [
         icon: Package,
     },
     {
+        type: "splitter",
+        title: "Lain-lain",
+        url: "#",
+    },
+    {
         type: "item",
-        title: "Testimoni",
+        title: "Testimoni Pelanggan",
         url: "/admin/testimonial",
         icon: Bubbles,
     },
     {
         type: "item",
-        title: "Pengaturan",
+        title: "Pengaturan Sistem",
         url: "/admin/setting",
         icon: Settings,
     },
