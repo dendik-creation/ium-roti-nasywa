@@ -13,9 +13,8 @@ return new class extends Migration {
         Schema::create("app_settings", function (Blueprint $table) {
             $table->id();
             $table->string("whatsapp_number");
-            $table->string("google_maps_url");
             $table->json("social_media");
-            $table->json("time_operational");
+            $table->string("time_operational");
             $table->timestamps();
         });
     }

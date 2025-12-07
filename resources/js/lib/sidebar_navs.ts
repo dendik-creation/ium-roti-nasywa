@@ -55,7 +55,7 @@ const sidebarNavs: NavItems = [
     {
         type: "item",
         title: "Pengaturan Sistem",
-        url: "/admin/setting",
+        url: "/admin/app-setting",
         icon: Settings,
     },
 ];

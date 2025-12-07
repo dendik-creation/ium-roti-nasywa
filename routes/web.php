@@ -1,4 +1,5 @@
     <?php
+    use App\Http\Controllers\Admin\AppSettingController;
     use Illuminate\Support\Facades\Route;
     // Global Controllers
     use App\Http\Controllers\global\AuthController;
@@ -72,6 +73,17 @@
                 Route::get("/", [TestimonialController::class, "index"])->name(
                     "testimonial.index",
                 );
+            });
+
+            // App Setting
+            Route::prefix("/app-setting")->group(function () {
+                Route::get("/", [AppSettingController::class, "index"])->name(
+                    "app-setting.index",
+                );
+                Route::put("/update", [
+                    AppSettingController::class,
+                    "update",
+                ])->name("app-setting.update");
             });
         });
 
