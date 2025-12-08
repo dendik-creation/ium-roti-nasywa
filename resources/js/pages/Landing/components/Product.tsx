@@ -51,6 +51,10 @@ export default function ProductSection({
     const handleCategoryChange = (category: string | number) => {
         if (category !== selectedCategory) {
             setSelectedCategory(category);
+            const productsSection = document.getElementById("products");
+            if (productsSection) {
+                productsSection.scrollIntoView({ behavior: "smooth" });
+            }
         }
     };
 
