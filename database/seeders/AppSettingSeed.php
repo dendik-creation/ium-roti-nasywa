@@ -18,7 +18,7 @@ class AppSettingSeed extends Seeder
             "social_media" => json_encode([
                 [
                     "platform" => "INSTAGRAM",
-                    "url" => "https:/instagram.com/rotinaywa_real",
+                    "url" => "https:/instagram.com/rotinasywa_real",
                 ],
                 [
                     "platform" => "TIKTOK",

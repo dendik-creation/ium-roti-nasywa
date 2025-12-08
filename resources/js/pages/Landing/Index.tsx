@@ -41,16 +41,16 @@ const LandingPage = ({
     const handleAddToCart = (product: Product, quantity: number) => {
         setCartItems((prev) => {
             const existingItem = prev.find(
-                (item) => item.product.id === product.id
+                (item) => item.product.id === product.id,
             );
             if (existingItem) {
                 toast.success(
-                    `Jumlah ${product.name} diperbarui di keranjang!`
+                    `Jumlah ${product.name} diperbarui di keranjang!`,
                 );
                 return prev.map((item) =>
                     item.product.id === product.id
                         ? { ...item, quantity: item.quantity + quantity }
-                        : item
+                        : item,
                 );
             }
             toast.success(`${product.name} ditambahkan ke keranjang!`);
@@ -63,14 +63,14 @@ const LandingPage = ({
             prev.map((item) =>
                 item.product.id === productId
                     ? { ...item, quantity: newQuantity }
-                    : item
-            )
+                    : item,
+            ),
         );
     };
 
     const handleRemoveItem = (productId: number) => {
         setCartItems((prev) =>
-            prev.filter((item) => item.product.id !== productId)
+            prev.filter((item) => item.product.id !== productId),
         );
         toast.success("Produk dihapus dari keranjang");
     };
@@ -86,7 +86,7 @@ const LandingPage = ({
 
     const cartItemCount = cartItems.reduce(
         (sum, item) => sum + item.quantity,
-        0
+        0,
     );
 
     return (
@@ -96,7 +96,7 @@ const LandingPage = ({
                     __html: `* { scroll-behavior: smooth; }`,
                 }}
             />
-            <Head title="Nasywa Cake & Bakery - Premium Artisan Bakery" />
+            <Head title="Nasywa Cake & Bakery - Tempat Cinta Roti & Kue" />
 
             <div className="font-sans text-[#2A1E12] bg-[#FFFCF7] min-h-screen selection:bg-[#B46B30] selection:text-white">
                 <Header

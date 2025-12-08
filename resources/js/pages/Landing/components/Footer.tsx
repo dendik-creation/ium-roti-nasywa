@@ -78,10 +78,10 @@ export default function Footer({ appSetting, categories }: FooterProps) {
                         </ul>
                     </div>
 
-                    {/* Products */}
+                    {/* Product Categories */}
                     <div>
                         <h4 className="text-lg font-bold mb-6 text-[#B46B30]">
-                            Produk Populer
+                            Kategori Populer
                         </h4>
                         <ul className="space-y-4">
                             {categories.length > 0 &&

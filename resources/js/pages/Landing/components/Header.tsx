@@ -15,11 +15,34 @@ export default function Header({
 }: HeaderProps) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState("");
 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
+
+            const sections = [
+                "home",
+                "about",
+                "products",
+                "custom-order",
+                "testimonial",
+                "contact",
+            ];
+            const currentSection = sections.find((section) => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    return rect.top <= 100 && rect.bottom >= 100;
+                }
+                return false;
+            });
+
+            if (currentSection) {
+                setActiveSection(currentSection);
+            }
         };
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -29,8 +52,17 @@ export default function Header({
         { name: "Tentang", href: "#about" },
         { name: "Produk", href: "#products" },
         { name: "Pesanan Kustom", href: "#custom-order" },
+        { name: "Testimoni", href: "testimonial" },
         { name: "Kontak", href: "#contact" },
     ];
+
+    const handleNavClick = (href: string) => {
+        const sectionId = href.replace("#", "");
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     return (
         <>
@@ -39,7 +71,7 @@ export default function Header({
                     "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
                     isScrolled
                         ? "bg-white/95 backdrop-blur-sm shadow-md py-4 text-[#2A1E12]"
-                        : "bg-transparent py-4 md:py-6 text-white"
+                        : "bg-transparent py-4 md:py-6 text-white",
                 )}
             >
                 <div className="container mx-auto px-4 flex justify-between items-center">
@@ -52,8 +84,8 @@ export default function Header({
                         />
                         <span
                             className={cn(
-                                "text-xl font-bold tracking-tight",
-                                isScrolled ? "text-[#B46B30]" : "text-white"
+                                "text-md md:text-xl font-bold tracking-tight",
+                                isScrolled ? "text-[#B46B30]" : "text-white",
                             )}
                         >
                             Nasywa Cake & Bakery
@@ -62,15 +94,24 @@ export default function Header({
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className="hover:text-[#E8B888] transition-colors font-medium cursor-pointer text-sm tracking-wide"
-                            >
-                                {link.name}
-                            </a>
-                        ))}
+                        {navLinks.map((link) => {
+                            const sectionId = link.href.replace("#", "");
+                            const isActive = activeSection === sectionId;
+
+                            return (
+                                <button
+                                    key={link.name}
+                                    onClick={() => handleNavClick(link.href)}
+                                    className={cn(
+                                        "hover:text-[#E8B888] transition-colors font-medium cursor-pointer text-sm tracking-wide",
+                                        isActive &&
+                                            "text-[#E8B888] font-semibold",
+                                    )}
+                                >
+                                    {link.name}
+                                </button>
+                            );
+                        })}
                     </nav>
 
                     {/* Actions */}
@@ -103,7 +144,7 @@ export default function Header({
                                         "px-5 py-2 rounded-full font-semibold transition-all text-sm border cursor-pointer",
                                         isScrolled
                                             ? "border-[#B46B30] text-[#B46B30] hover:bg-[#B46B30] hover:text-white"
-                                            : "border-white text-white hover:bg-white hover:text-[#B46B30]"
+                                            : "border-white text-white hover:bg-white hover:text-[#B46B30]",
                                     )}
                                 >
                                     Masuk
@@ -128,14 +169,16 @@ export default function Header({
                     "fixed inset-0 z-60 bg-black/50 transition-opacity md:hidden",
                     isMobileMenuOpen
                         ? "opacity-100 visible"
-                        : "opacity-0 invisible"
+                        : "opacity-0 invisible",
                 )}
                 onClick={() => setIsMobileMenuOpen(false)}
             >
                 <div
                     className={cn(
                         "absolute top-0 left-0 bottom-0 w-[80%] max-w-xs bg-[#FFFCF7] p-6 transition-transform duration-300 shadow-2xl",
-                        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+                        isMobileMenuOpen
+                            ? "translate-x-0"
+                            : "-translate-x-full",
                     )}
                     onClick={(e) => e.stopPropagation()}
                 >
@@ -151,16 +194,27 @@ export default function Header({
                         </button>
                     </div>
                     <nav className="flex flex-col gap-4">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className="text-lg font-medium text-[#2A1E12] hover:text-[#B46B30] cursor-pointer py-2 border-b border-dashed border-gray-200"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                {link.name}
-                            </a>
-                        ))}
+                        {navLinks.map((link) => {
+                            const sectionId = link.href.replace("#", "");
+                            const isActive = activeSection === sectionId;
+
+                            return (
+                                <button
+                                    key={link.name}
+                                    onClick={() => {
+                                        handleNavClick(link.href);
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                    className={cn(
+                                        "text-lg font-medium text-[#2A1E12] hover:text-[#B46B30] cursor-pointer py-2 border-b border-dashed border-gray-200 text-left",
+                                        isActive &&
+                                            "text-[#B46B30] font-semibold",
+                                    )}
+                                >
+                                    {link.name}
+                                </button>
+                            );
+                        })}
 
                         {/* Auth Button Mobile */}
                         <div className="pt-4">
