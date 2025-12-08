@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Product as ProductType } from "@/types/product";
 import { SelectOption } from "@/types/global";
 import { ShoppingCart, Eye, CakeSlice } from "lucide-react";
@@ -24,15 +24,34 @@ export default function ProductSection({
         null,
     );
     const [isDetailOpen, setIsDetailOpen] = useState(false);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [displayedProducts, setDisplayedProducts] =
+        useState<ProductType[]>(products);
 
     const filteredProducts =
         selectedCategory === "all"
             ? products
             : products.filter((p) => p.category_id === selectedCategory);
 
+    useEffect(() => {
+        setIsTransitioning(true);
+        const timer = setTimeout(() => {
+            setDisplayedProducts(filteredProducts);
+            setIsTransitioning(false);
+        }, 150);
+
+        return () => clearTimeout(timer);
+    }, [selectedCategory, products]);
+
     const handleOpenDetail = (product: ProductType) => {
         setSelectedProduct(product);
         setIsDetailOpen(true);
+    };
+
+    const handleCategoryChange = (category: string | number) => {
+        if (category !== selectedCategory) {
+            setSelectedCategory(category);
+        }
     };
 
     return (
@@ -52,37 +71,44 @@ export default function ProductSection({
                 </div>
 
                 {/* Filter */}
-                <div className="flex flex-wrap justify-center gap-3 mb-12">
-                    <button
-                        onClick={() => setSelectedCategory("all")}
-                        className={cn(
-                            "px-6 py-2 rounded-full text-sm font-medium transition-all cursor-pointer",
-                            selectedCategory === "all"
-                                ? "bg-[#B46B30] text-white shadow-lg"
-                                : "bg-[#FFFCF7] text-[#784421] hover:bg-[#E8B888] hover:text-white",
-                        )}
-                    >
-                        Semua
-                    </button>
-                    {categories.map((cat) => (
+                <div className="sticky top-18 z-10 bg-white/95 backdrop-blur-sm py-4 -mx-4 px-4 mb-8">
+                    <div className="flex flex-wrap justify-center gap-3">
                         <button
-                            key={cat.value}
-                            onClick={() => setSelectedCategory(cat.value)}
+                            onClick={() => handleCategoryChange("all")}
                             className={cn(
                                 "px-6 py-2 rounded-full text-sm font-medium transition-all cursor-pointer",
-                                selectedCategory === cat.value
+                                selectedCategory === "all"
                                     ? "bg-[#B46B30] text-white shadow-lg"
                                     : "bg-[#FFFCF7] text-[#784421] hover:bg-[#E8B888] hover:text-white",
                             )}
                         >
-                            {cat.label}
+                            Semua
                         </button>
-                    ))}
+                        {categories.map((cat) => (
+                            <button
+                                key={cat.value}
+                                onClick={() => handleCategoryChange(cat.value)}
+                                className={cn(
+                                    "px-6 py-2 rounded-full text-sm font-medium transition-all cursor-pointer",
+                                    selectedCategory === cat.value
+                                        ? "bg-[#B46B30] text-white shadow-lg"
+                                        : "bg-[#FFFCF7] text-[#784421] hover:bg-[#E8B888] hover:text-white",
+                                )}
+                            >
+                                {cat.label}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Grid */}
-                {filteredProducts.length === 0 ? (
-                    <div className="text-center py-16">
+                {displayedProducts.length === 0 ? (
+                    <div
+                        className={cn(
+                            "text-center py-16 transition-opacity duration-300",
+                            isTransitioning ? "opacity-0" : "opacity-100",
+                        )}
+                    >
                         <div className="mb-6">
                             <CakeSlice className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                         </div>
@@ -95,8 +121,13 @@ export default function ProductSection({
                         </p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {filteredProducts.map((product) => {
+                    <div
+                        className={cn(
+                            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 transition-opacity duration-300",
+                            isTransitioning ? "opacity-0" : "opacity-100",
+                        )}
+                    >
+                        {displayedProducts.map((product, index) => {
                             const images =
                                 product.images && product.images.length > 0
                                     ? product.images
@@ -109,7 +140,18 @@ export default function ProductSection({
                             return (
                                 <div
                                     key={product.id}
-                                    className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+                                    className={cn(
+                                        "group bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden border border-gray-100 transition-all duration-300 cursor-pointer md:cursor-default",
+                                        isTransitioning
+                                            ? "opacity-0 transform translate-y-4"
+                                            : "opacity-100 transform translate-y-0",
+                                    )}
+                                    style={{
+                                        transitionDelay: isTransitioning
+                                            ? "0ms"
+                                            : `${index * 50}ms`,
+                                    }}
+                                    onClick={() => handleOpenDetail(product)}
                                 >
                                     <div className="relative aspect-square overflow-hidden">
                                         <img
@@ -123,21 +165,23 @@ export default function ProductSection({
                                                     "https://placehold.co/400x400?text=Image+Error";
                                             }}
                                         />
-                                        {/* Overlay Actions */}
-                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                                        {/* Overlay Actions - Hidden on mobile */}
+                                        <div className="hidden md:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center gap-4">
                                             <button
-                                                onClick={() =>
-                                                    handleOpenDetail(product)
-                                                }
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleOpenDetail(product);
+                                                }}
                                                 className="p-3 bg-white text-[#2A1E12] rounded-full hover:bg-[#B46B30] hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 cursor-pointer"
                                                 title="Lihat Detail"
                                             >
                                                 <Eye className="w-5 h-5" />
                                             </button>
                                             <button
-                                                onClick={() =>
-                                                    onAddToCart(product, 1)
-                                                }
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onAddToCart(product, 1);
+                                                }}
                                                 className="p-3 bg-white text-[#2A1E12] rounded-full hover:bg-[#B46B30] hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 cursor-pointer"
                                                 title="Tambah ke Keranjang"
                                             >
@@ -158,6 +202,17 @@ export default function ProductSection({
                                                     product.price,
                                                 )}
                                             </span>
+                                            {/* Mobile cart button */}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onAddToCart(product, 1);
+                                                }}
+                                                className="md:hidden p-2 bg-[#B46B30] text-white rounded-full hover:bg-[#784421] transition-colors cursor-pointer"
+                                                title="Tambah ke Keranjang"
+                                            >
+                                                <ShoppingCart className="w-6 h-6" />
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

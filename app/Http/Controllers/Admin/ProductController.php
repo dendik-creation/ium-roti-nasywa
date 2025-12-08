@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Spatie\Image\Image;
 
 class ProductController extends Controller
 {
@@ -60,22 +61,46 @@ class ProductController extends Controller
             ],
             "images" => ["required"],
         ]);
+
         $images = $request->file("images");
         $imagePaths = [];
+
         foreach ($images as $image) {
-            $filename =
-                now()->format("YmdHisv") .
-                "." .
-                $image->getClientOriginalExtension();
-            $path = Storage::disk("public")->putFileAs(
+            $extension = strtolower($image->getClientOriginalExtension());
+            $filename = now()->format("YmdHisv") . "." . $extension;
+
+            $tempPath = storage_path("app/tmp/{$filename}");
+            if (!is_dir(dirname($tempPath))) {
+                mkdir(dirname($tempPath), 0777, true);
+            }
+
+            $img = Image::load($image->getPathname())
+                ->width(1280)
+                ->height(1280);
+
+            if (in_array($extension, ["jpg", "jpeg"])) {
+                $img->quality(75);
+            } elseif ($extension === "png") {
+                $img->quality(7);
+            }
+
+            $img->save($tempPath);
+
+            Storage::disk("public")->putFileAs(
                 "products",
-                $image,
+                new \Illuminate\Http\File($tempPath),
                 $filename,
             );
-            $imagePaths[] = $path;
+
+            @unlink($tempPath);
+
+            $imagePaths[] = "products/" . $filename;
         }
+
         $data["images"] = json_encode($imagePaths);
+
         Product::create($data);
+
         Session::flash("success", "Produk berhasil ditambahkan");
         return Inertia::location(route("product.index"));
     }
@@ -96,33 +121,48 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
         $existingImages = json_decode($product->images, true) ?: [];
-        // Delete all existing images from storage
-        foreach ($existingImages as $imagePath) {
-            if (Storage::disk("public")->exists($imagePath)) {
-                Storage::disk("public")->delete($imagePath);
-            }
+        foreach ($existingImages as $oldPath) {
+            Storage::disk("public")->delete($oldPath);
         }
-        // Handle new images
+
         $newImagePaths = [];
-        if ($request->hasFile("images")) {
-            $images = $request->file("images");
-            foreach ($images as $image) {
-                $filename =
-                    now()->format("YmdHisv") .
-                    "." .
-                    $image->getClientOriginalExtension();
-                $path = Storage::disk("public")->putFileAs(
-                    "products",
-                    $image,
-                    $filename,
-                );
-                $newImagePaths[] = $path;
+
+        foreach ($request->file("images") as $uploadedFile) {
+            $ext = strtolower($uploadedFile->getClientOriginalExtension());
+            $filename = now()->format("YmdHisv") . "." . $ext;
+
+            $tempPath = storage_path("app/tmp/{$filename}");
+            if (!is_dir(dirname($tempPath))) {
+                mkdir(dirname($tempPath), 0777, true);
             }
+
+            $img = Image::load($uploadedFile->getPathname())
+                ->width(1280)
+                ->height(1280);
+
+            if (in_array($ext, ["jpg", "jpeg"])) {
+                $img->quality(75);
+            } elseif ($ext === "png") {
+                $img->quality(7);
+            }
+
+            $img->save($tempPath);
+
+            Storage::disk("public")->putFileAs(
+                "products",
+                new \Illuminate\Http\File($tempPath),
+                $filename,
+            );
+
+            @unlink($tempPath);
+
+            $newImagePaths[] = "products/" . $filename;
         }
-        // Replace with new images only
+
         $data["images"] = json_encode($newImagePaths);
 
         $product->update($data);
+
         Session::flash("success", "Produk berhasil diperbarui");
         return Inertia::location(route("product.index"));
     }
