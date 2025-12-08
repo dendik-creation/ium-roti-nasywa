@@ -33,6 +33,9 @@ const TestimonialIndex = ({
 
     const handleFilter = (key: keyof typeof filterData, value: string) => {
         setFilterData(key, value);
+        if (key == "rating" && value == "0") {
+            setFilterData(key, undefined);
+        }
     };
 
     const debounceSearch = inputDebounce((data: typeof filterData) => {
@@ -46,7 +49,7 @@ const TestimonialIndex = ({
                 preserveState: true,
                 replace: true,
                 only: ["testimonials"],
-            }
+            },
         );
     });
 
@@ -83,7 +86,11 @@ const TestimonialIndex = ({
                         />
                     </div>
                     {filterData.rating && (
-                        <Button variant={"yellow"} size={"sm"}>
+                        <Button
+                            variant={"yellow"}
+                            onClick={() => handleFilter("rating", "0")}
+                            size={"sm"}
+                        >
                             Reset Rating
                         </Button>
                     )}

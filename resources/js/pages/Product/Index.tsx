@@ -101,15 +101,15 @@ const ProductIndex = ({
         <AppLayout>
             <PageTitle title={title} description={description} />
             {/* Filters & New Btn */}
-            <div className="flex justify-between items-center mb-4">
-                <div className="flex items-center gap-2 w-full">
+            <div className="flex justify-start flex-col lg:flex-row lg:justify-between gap-3 lg:gap-0 items-center mb-4">
+                <div className="flex flex-col lg:flex-row items-center gap-2 w-full">
                     <SearchInput
                         placeholder="Cari nama produk"
                         className="lg:max-w-sm w-full"
                         onChange={(e) => handleFilter("search", e.target.value)}
                         value={filterData.search || ""}
                     />
-                    <div className="">
+                    <div className="w-full lg:max-w-xs">
                         <SelectSearchInput
                             options={categories}
                             value={filterData.category.toString() || ""}

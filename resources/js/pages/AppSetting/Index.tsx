@@ -44,7 +44,7 @@ const AppSettingIndex = ({
     const handleChange = (
         e: React.ChangeEvent<
             HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >
+        >,
     ) => {
         const { name, value } = e.target;
         setData(name as keyof typeof data, value);
@@ -72,7 +72,7 @@ const AppSettingIndex = ({
             if (!item.platform || item.platform.trim() === "") {
                 setError(
                     `social_media.${index}.platform`,
-                    `Platform wajib diisi`
+                    `Platform wajib diisi`,
                 );
                 valid = false;
             }
@@ -114,7 +114,8 @@ const AppSettingIndex = ({
                             htmlFor="whatsapp_number"
                             className="text-base mb-1 after:content-['*'] after:text-red-500 after:ml-1"
                         >
-                            Nomor WhatsApp
+                            Nomor WhatsApp (Sebagai target pesan otomatis dari
+                            sistem)
                         </label>
                         <Input
                             type="tel"
@@ -124,7 +125,7 @@ const AppSettingIndex = ({
                             value={data.whatsapp_number ?? ""}
                             onChange={handleChange}
                             className={cn(
-                                errors.whatsapp_number && "border-red-500"
+                                errors.whatsapp_number && "border-red-500",
                             )}
                         />
                         {errors.whatsapp_number && (
@@ -146,7 +147,7 @@ const AppSettingIndex = ({
                             value={data.time_operational ?? ""}
                             onChange={handleChange}
                             className={cn(
-                                errors.time_operational && "border-red-500"
+                                errors.time_operational && "border-red-500",
                             )}
                         />
                         {errors.time_operational && (
@@ -173,93 +174,103 @@ const AppSettingIndex = ({
                         </div>
                         {data.social_media.length > 0 ? (
                             data.social_media.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="flex flex-col lg:flex-row items-start gap-3 mb-3"
-                                >
-                                    <div className="w-full">
-                                        <SelectSearchInput
-                                            options={AVAILABLE_SOCIAL_MEDIA}
-                                            value={item.platform}
-                                            onChange={(value) => {
-                                                const updatedSocialMedia = [
-                                                    ...data.social_media,
-                                                ];
-                                                updatedSocialMedia[
-                                                    index
-                                                ].platform =
-                                                    value as SocialMedia["platform"];
-                                                setData(
-                                                    "social_media",
-                                                    updatedSocialMedia
-                                                );
-                                            }}
-                                            placeholder="Pilih platform"
-                                            className={cn(
-                                                errors[
-                                                    `social_media.${index}.platform`
-                                                ] && "border-red-500"
-                                            )}
-                                        />
-                                        {errors[
-                                            `social_media.${index}.platform`
-                                        ] && (
-                                            <ErrorInput
-                                                error={
+                                <div key={index} className="mb-3">
+                                    <div className="flex flex-col lg:flex-row items-start gap-3">
+                                        <div className="w-full">
+                                            <SelectSearchInput
+                                                options={AVAILABLE_SOCIAL_MEDIA}
+                                                value={item.platform}
+                                                onChange={(value) => {
+                                                    const updatedSocialMedia = [
+                                                        ...data.social_media,
+                                                    ];
+                                                    updatedSocialMedia[
+                                                        index
+                                                    ].platform =
+                                                        value as SocialMedia["platform"];
+                                                    setData(
+                                                        "social_media",
+                                                        updatedSocialMedia,
+                                                    );
+                                                }}
+                                                placeholder="Pilih platform"
+                                                className={cn(
                                                     errors[
                                                         `social_media.${index}.platform`
-                                                    ]
-                                                }
+                                                    ] && "border-red-500",
+                                                )}
                                             />
-                                        )}
-                                    </div>
-                                    <div className="w-full">
-                                        <Input
-                                            type="url"
-                                            placeholder="Masukkan URL"
-                                            value={item.url}
-                                            onChange={(e) => {
-                                                const updatedSocialMedia = [
-                                                    ...data.social_media,
-                                                ];
-                                                updatedSocialMedia[index].url =
-                                                    e.target.value;
-                                                setData(
-                                                    "social_media",
-                                                    updatedSocialMedia
-                                                );
-                                            }}
-                                            className={cn(
-                                                errors[
-                                                    `social_media.${index}.url`
-                                                ] && "border-red-500"
+                                            {errors[
+                                                `social_media.${index}.platform`
+                                            ] && (
+                                                <ErrorInput
+                                                    error={
+                                                        errors[
+                                                            `social_media.${index}.platform`
+                                                        ]
+                                                    }
+                                                />
                                             )}
-                                        />
-                                        {errors[
-                                            `social_media.${index}.url`
-                                        ] && (
-                                            <ErrorInput
-                                                error={
+                                        </div>
+                                        <div className="w-full">
+                                            <Input
+                                                type="url"
+                                                placeholder="Masukkan URL"
+                                                value={item.url}
+                                                onChange={(e) => {
+                                                    const updatedSocialMedia = [
+                                                        ...data.social_media,
+                                                    ];
+                                                    updatedSocialMedia[
+                                                        index
+                                                    ].url = e.target.value;
+                                                    setData(
+                                                        "social_media",
+                                                        updatedSocialMedia,
+                                                    );
+                                                }}
+                                                className={cn(
                                                     errors[
                                                         `social_media.${index}.url`
-                                                    ]
-                                                }
+                                                    ] && "border-red-500",
+                                                )}
                                             />
-                                        )}
+                                            {errors[
+                                                `social_media.${index}.url`
+                                            ] && (
+                                                <ErrorInput
+                                                    error={
+                                                        errors[
+                                                            `social_media.${index}.url`
+                                                        ]
+                                                    }
+                                                />
+                                            )}
+                                        </div>
+                                        <div className="w-full lg:w-32 flex lg:items-start lg:pt-0">
+                                            <Button
+                                                type="button"
+                                                onClick={() =>
+                                                    removeSocialMedia(index)
+                                                }
+                                                variant={"red"}
+                                                size={"icon"}
+                                                className="w-full"
+                                            >
+                                                <Trash2 />
+                                                <span className="lg:hidden">
+                                                    Hapus{" "}
+                                                    {item.platform
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                        item.platform
+                                                            .slice(1)
+                                                            .toLowerCase()}
+                                                </span>
+                                            </Button>
+                                        </div>
                                     </div>
-                                    <div className="w-full lg:w-32 flex lg:items-start lg:pt-0">
-                                        <Button
-                                            type="button"
-                                            onClick={() =>
-                                                removeSocialMedia(index)
-                                            }
-                                            variant={"red"}
-                                            size={"icon"}
-                                            className="w-full"
-                                        >
-                                            <Trash2 />
-                                        </Button>
-                                    </div>
+                                    <div className="rounded-full h-[0.4px] mt-3 w-full bg-slate-500"></div>
                                 </div>
                             ))
                         ) : (

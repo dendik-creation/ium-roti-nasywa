@@ -73,7 +73,7 @@ const ProductCategoryIndex = ({
         <AppLayout>
             <PageTitle title={title} description={description} />
             {/*Filters & New Btn*/}
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-start flex-col lg:flex-row lg:justify-between gap-3 lg:gap-0 items-center mb-4">
                 <div className="flex items-center gap-2 w-full">
                     <SearchInput
                         placeholder={`Cari nama kategori produk`}

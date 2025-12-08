@@ -29,7 +29,7 @@ const ModalDetailImage = ({
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-7xl">
-                <DialogHeader className="sticky top-0 bg-white z-10 pb-3 border-b">
+                <DialogHeader className="sticky top-0 bg-white pb-3 border-b">
                     <DialogTitle>Gambar dari {product_name}</DialogTitle>
                     <DialogDescription className="mb-3">
                         Gambar produk bisa lebih dari satu

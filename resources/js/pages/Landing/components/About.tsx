@@ -2,10 +2,10 @@ import { CheckCircle2 } from "lucide-react";
 
 export default function About() {
     const highlights = [
-        "Fresh Ingredients",
-        "Handmade with Love",
-        "Hygienic Process",
-        "Premium Quality",
+        "Bahan yang berkualitas",
+        "Dibuat dengan cinta",
+        "Proses yang higienis",
+        "Kualitas terjamin",
     ];
 
     return (

@@ -55,8 +55,8 @@ const ModalCategoryCreate = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <span>
-                    <Button variant={"yellow"}>
+                <span className="w-full lg:w-fit">
+                    <Button variant={"yellow"} className="w-full lg:w-fit">
                         <CircleFadingPlus />
                         <span>Tambah Kategori</span>
                     </Button>
