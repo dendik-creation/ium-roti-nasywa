@@ -52,7 +52,7 @@ export default function Header({
         { name: "Tentang", href: "#about" },
         { name: "Produk", href: "#products" },
         { name: "Pesanan Kustom", href: "#custom-order" },
-        { name: "Testimoni", href: "testimonial" },
+        { name: "Testimoni", href: "#testimonial" },
         { name: "Kontak", href: "#contact" },
     ];
 
@@ -79,7 +79,7 @@ export default function Header({
                     <div className="flex items-center gap-2 cursor-pointer">
                         <img
                             src="/assets/img/landing/logo.jpg"
-                            alt="Nasywa Cake & Bakery Logo"
+                            alt="Roti Nasywa - Logo Toko Roti dan Kue Terbaik"
                             className="w-10 h-10 rounded-full object-cover shadow-sm"
                         />
                         <span
@@ -88,7 +88,7 @@ export default function Header({
                                 isScrolled ? "text-[#B46B30]" : "text-white",
                             )}
                         >
-                            Nasywa Cake & Bakery
+                            Roti Nasywa
                         </span>
                     </div>
 
@@ -99,17 +99,22 @@ export default function Header({
                             const isActive = activeSection === sectionId;
 
                             return (
-                                <button
+                                <a
                                     key={link.name}
-                                    onClick={() => handleNavClick(link.href)}
+                                    href={link.href}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleNavClick(link.href);
+                                    }}
                                     className={cn(
                                         "hover:text-[#E8B888] transition-colors font-medium cursor-pointer text-sm tracking-wide",
                                         isActive &&
                                             "text-[#E8B888] font-semibold",
                                     )}
+                                    title={`Navigasi ke ${link.name} - Roti Nasywa`}
                                 >
                                     {link.name}
-                                </button>
+                                </a>
                             );
                         })}
                     </nav>
@@ -119,6 +124,8 @@ export default function Header({
                         <button
                             onClick={onCartClick}
                             className="relative p-2 hover:bg-black/10 rounded-full transition-colors cursor-pointer"
+                            title={`Keranjang Belanja - ${cartItemCount} item`}
+                            aria-label={`Keranjang belanja dengan ${cartItemCount} item`}
                         >
                             <ShoppingCart className="w-6 h-6" />
                             {cartItemCount > 0 && (
@@ -199,9 +206,11 @@ export default function Header({
                             const isActive = activeSection === sectionId;
 
                             return (
-                                <button
+                                <a
                                     key={link.name}
-                                    onClick={() => {
+                                    href={link.href}
+                                    onClick={(e) => {
+                                        e.preventDefault();
                                         handleNavClick(link.href);
                                         setIsMobileMenuOpen(false);
                                     }}
@@ -210,9 +219,10 @@ export default function Header({
                                         isActive &&
                                             "text-[#B46B30] font-semibold",
                                     )}
+                                    title={`Navigasi ke ${link.name} - Roti Nasywa`}
                                 >
                                     {link.name}
-                                </button>
+                                </a>
                             );
                         })}
 

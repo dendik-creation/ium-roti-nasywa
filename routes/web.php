@@ -4,6 +4,7 @@
     // Global Controllers
     use App\Http\Controllers\Global\AuthController;
     use App\Http\Controllers\Global\LandingController;
+    use App\Http\Controllers\SeoController;
     // Admin Controllers
     use App\Http\Controllers\Admin\ProductCategoryController;
     use App\Http\Controllers\Admin\ProductController;
@@ -11,7 +12,16 @@
     use App\Http\Controllers\Admin\DashboardController;
 
     Route::get("/", [LandingController::class, "index"])->name("index");
-    Route::post("/testimonial", [LandingController::class, "storeTestimonial"])->name("landing.testimonial.store");
+    Route::post("/testimonial", [
+        LandingController::class,
+        "storeTestimonial",
+    ])->name("landing.testimonial.store");
+
+    // SEO Routes
+    Route::get("/sitemap.xml", [SeoController::class, "sitemap"])->name(
+        "sitemap",
+    );
+    Route::get("/robots.txt", [SeoController::class, "robots"])->name("robots");
     Route::prefix("auth")->group(function () {
         Route::get("/signin", [AuthController::class, "signInView"])
             ->name("login")

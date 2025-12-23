@@ -19,12 +19,26 @@ import Cart, { CartItem } from "./components/Cart";
 import Checkout from "./components/Checkout";
 import CustomCheckout from "./components/CustomCheckout";
 
+type SEOData = {
+    title: string;
+    description: string;
+    keywords: string;
+    canonical: string;
+    og_title: string;
+    og_description: string;
+    og_image: string;
+    og_url: string;
+    twitter_card: string;
+};
+
 type LandingPageProps = {
     products: Product[];
     categories: SelectOption[];
     testimonials: TestimonialType[];
     app_setting: AppSetting;
     is_logged_in: boolean;
+    seo?: SEOData;
+    structured_data?: any;
 };
 
 const LandingPage = ({
@@ -33,6 +47,8 @@ const LandingPage = ({
     testimonials,
     app_setting,
     is_logged_in,
+    seo,
+    structured_data,
 }: LandingPageProps) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -91,12 +107,116 @@ const LandingPage = ({
 
     return (
         <>
+            <Head>
+                {/* Basic Meta Tags */}
+                <title>
+                    {seo?.title ||
+                        "Roti Nasywa - Toko Roti dan Kue Terbaik di Indonesia"}
+                </title>
+                <meta
+                    name="description"
+                    content={
+                        seo?.description ||
+                        "Roti Nasywa menyediakan roti dan kue berkualitas tinggi dengan rasa autentik."
+                    }
+                />
+                <meta
+                    name="keywords"
+                    content={
+                        seo?.keywords || "roti nasywa, roti, kue, bakery, cake"
+                    }
+                />
+                <link
+                    rel="canonical"
+                    href={seo?.canonical || window.location.href}
+                />
+
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta
+                    property="og:url"
+                    content={seo?.og_url || window.location.href}
+                />
+                <meta
+                    property="og:title"
+                    content={seo?.og_title || seo?.title || "Roti Nasywa"}
+                />
+                <meta
+                    property="og:description"
+                    content={
+                        seo?.og_description ||
+                        seo?.description ||
+                        "Temukan koleksi roti dan kue terbaik di Roti Nasywa"
+                    }
+                />
+                <meta
+                    property="og:image"
+                    content={seo?.og_image || "/assets/img/landing/logo.png"}
+                />
+                <meta property="og:site_name" content="Roti Nasywa" />
+                <meta property="og:locale" content="id_ID" />
+
+                {/* Twitter */}
+                <meta
+                    property="twitter:card"
+                    content={seo?.twitter_card || "summary_large_image"}
+                />
+                <meta
+                    property="twitter:url"
+                    content={seo?.og_url || window.location.href}
+                />
+                <meta
+                    property="twitter:title"
+                    content={seo?.og_title || seo?.title || "Roti Nasywa"}
+                />
+                <meta
+                    property="twitter:description"
+                    content={
+                        seo?.og_description ||
+                        seo?.description ||
+                        "Temukan koleksi roti dan kue terbaik di Roti Nasywa"
+                    }
+                />
+                <meta
+                    property="twitter:image"
+                    content={seo?.og_image || "/assets/img/landing/logo.png"}
+                />
+
+                {/* Additional Meta Tags */}
+                <meta
+                    name="robots"
+                    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+                />
+                <meta name="author" content="Roti Nasywa" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0"
+                />
+                <meta name="theme-color" content="#B46B30" />
+
+                {/* Favicon */}
+                <link
+                    rel="icon"
+                    type="image/png"
+                    href="/assets/img/landing/logo.png"
+                />
+
+                {/* Structured Data */}
+                {structured_data && (
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{
+                            __html: JSON.stringify(structured_data),
+                        }}
+                    />
+                )}
+            </Head>
+
             <style
                 dangerouslySetInnerHTML={{
                     __html: `* { scroll-behavior: smooth; }`,
                 }}
             />
-            <Head title="Nasywa Cake & Bakery - Tempat Cinta Roti & Kue" />
 
             <div className="font-sans text-[#2A1E12] bg-[#FFFCF7] min-h-screen selection:bg-[#B46B30] selection:text-white">
                 <Header
@@ -106,17 +226,27 @@ const LandingPage = ({
                 />
 
                 <main>
-                    <Hero />
-                    <About />
-                    <ProductSection
-                        products={products}
-                        categories={categories}
-                        onAddToCart={handleAddToCart}
-                    />
+                    <section id="home">
+                        <Hero />
+                    </section>
+                    <section id="about">
+                        <About />
+                    </section>
+                    <section id="products">
+                        <ProductSection
+                            products={products}
+                            categories={categories}
+                            onAddToCart={handleAddToCart}
+                        />
+                    </section>
                     <CustomCheckout appSetting={app_setting} />
-                    <TestimonialSection testimonials={testimonials} />
-                    <TestimonialForm />
-                    <ContactUs appSetting={app_setting} />
+                    <section id="testimonial">
+                        <TestimonialSection testimonials={testimonials} />
+                        <TestimonialForm />
+                    </section>
+                    <section id="contact">
+                        <ContactUs appSetting={app_setting} />
+                    </section>
                 </main>
 
                 <Footer appSetting={app_setting} categories={categories} />
