@@ -1,6 +1,6 @@
 import DynamicCard from "@/components/custom/DynamicCard";
 import AppLayout from "@/partials/AppLayout";
-import { PageTitle, PageTitleProps } from "@/Partials/PageTitle";
+import { PageTitle, PageTitleProps } from "@/partials/PageTitle";
 import { Testimonial } from "@/types/testimonial";
 import { Bubbles, Package, PackageSearch } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

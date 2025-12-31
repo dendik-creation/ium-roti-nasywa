@@ -77,6 +77,14 @@
                 Route::post("/", [ProductController::class, "store"])->name(
                     "product.store",
                 );
+                Route::get("/order-list", [
+                    ProductController::class,
+                    "orderList",
+                ])->name("product.order-list.index");
+                Route::post("/order-list/update", [
+                    ProductController::class,
+                    "updateOrderList",
+                ])->name("product.order-list.update");
                 Route::put("/{id}", [ProductController::class, "update"])->name(
                     "product.update",
                 );

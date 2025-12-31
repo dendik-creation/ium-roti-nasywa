@@ -9,8 +9,8 @@ import {
     inputDebounce,
 } from "@/components/helper/helper";
 import AppLayout from "@/partials/AppLayout";
-import { PageTitle } from "@/Partials/PageTitle";
-import { router, useForm } from "@inertiajs/react";
+import { PageTitle } from "@/partials/PageTitle";
+import { Link, router, useForm } from "@inertiajs/react";
 import { useEffect, useRef, useState } from "react";
 import {
     Table,
@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import EmptyTable from "@/components/custom/EmptyTable";
-import { Image, Trash2 } from "lucide-react";
+import { Image, ListOrdered, Trash2 } from "lucide-react";
 import {
     Tooltip,
     TooltipContent,
@@ -121,7 +121,15 @@ const ProductIndex = ({
                         />
                     </div>
                 </div>
-                <ModalProductCreate />
+                <div className="flex items-center gap-2">
+                    <Link href={"/admin/product/order-list"}>
+                        <Button variant={"green"}>
+                            <ListOrdered />
+                            <span>Urutkan Produk</span>
+                        </Button>
+                    </Link>
+                    <ModalProductCreate />
+                </div>
                 <ModalDetailImage
                     images={modalImages.images}
                     product_name={modalImages.product_name}
@@ -140,7 +148,7 @@ const ProductIndex = ({
                     <TableHeader>
                         <TableRow>
                             <TableHead className="bg-stone-200 font-semibold">
-                                #
+                                Urutan
                             </TableHead>
                             <TableHead className="bg-stone-200 font-semibold">
                                 Gambar

@@ -1,7 +1,7 @@
 import { PaginatorBuilder, SearchInput } from "@/components/custom/FormElement";
 import { handleElipsisText, inputDebounce } from "@/components/helper/helper";
 import AppLayout from "@/partials/AppLayout";
-import { PageTitle } from "@/Partials/PageTitle";
+import { PageTitle } from "@/partials/PageTitle";
 import { ProductCategoryIndexProps } from "@/types/product_category";
 import { router, useForm } from "@inertiajs/react";
 import { useEffect, useRef } from "react";

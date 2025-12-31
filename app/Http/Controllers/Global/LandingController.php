@@ -31,7 +31,7 @@ class LandingController extends Controller
         $app_setting = AppSetting::getSetting();
 
         $products = Product::with("category")
-            ->latest()
+            ->orderBy("order_number", "asc")
             ->get()
             ->map(function ($item) {
                 $item->images = json_decode($item->images, true) ?: [];

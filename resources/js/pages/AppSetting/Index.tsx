@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import AppLayout from "@/partials/AppLayout";
-import { PageTitle } from "@/Partials/PageTitle";
+import { PageTitle } from "@/partials/PageTitle";
 import { AppSettingIndexProps, SocialMedia } from "@/types/app_setting";
 import { useForm } from "@inertiajs/react";
 import { Loader, Plus, Save, Trash2 } from "lucide-react";

@@ -1,7 +1,7 @@
 import { PaginatorBuilder, SearchInput } from "@/components/custom/FormElement";
 import { inputDebounce, ymdToIdDate } from "@/components/helper/helper";
 import AppLayout from "@/partials/AppLayout";
-import { PageTitle } from "@/Partials/PageTitle";
+import { PageTitle } from "@/partials/PageTitle";
 import { TestimonialIndexProps } from "@/types/testimonial";
 import { router, useForm } from "@inertiajs/react";
 import { Rating } from "@smastrom/react-rating";

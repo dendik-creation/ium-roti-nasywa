@@ -32,6 +32,7 @@ class ProductController extends Controller
             ->when($category, function ($query, $category) {
                 $query->where("category_id", $category);
             })
+            ->orderBy("order_number", "asc")
             ->paginate(config("custom.default.pagination"));
         $products->getCollection()->transform(function ($item) {
             $item->images = json_decode($item->images, true) ?: [];
@@ -98,8 +99,13 @@ class ProductController extends Controller
         }
 
         $data["images"] = json_encode($imagePaths);
+        $latest_order_number = Product::max("order_number") ?? 0;
 
-        Product::create($data);
+        Product::create(
+            array_merge($data, [
+                "order_number" => $latest_order_number + 1,
+            ]),
+        );
 
         Session::flash("success", "Produk berhasil ditambahkan");
         return Inertia::location(route("product.index"));
@@ -179,5 +185,48 @@ class ProductController extends Controller
         $product->delete();
         Session::flash("success", "Produk berhasil dihapus");
         return Inertia::location(route("product.index"));
+    }
+
+    public function orderList()
+    {
+        $products = Product::select("id", "name", "category_id", "images")
+            ->with("category:id,name")
+            ->orderBy("order_number", "asc")
+            ->get()
+            ->map(function ($item) {
+                $images = json_decode($item->images, true) ?: [];
+                return [
+                    "id" => $item->id,
+                    "name" => $item->name,
+                    "category_name" => $item->category
+                        ? $item->category->name
+                        : null,
+                    "image" => isset($images[0]) ? $images[0] : null,
+                ];
+            });
+
+        return Inertia::render("Product/OrderList", [
+            "title" => "Atur Urutan Produk",
+            "description" =>
+                "Atur urutan tampilan produk sesuai keinginan Anda dengan cara drag and drop.",
+            "products" => $products,
+        ]);
+    }
+
+    public function updateOrderList(Request $request)
+    {
+        $data = $request->validate([
+            "ordered_ids" => ["required", "array"],
+            "ordered_ids.*" => ["integer", "exists:products,id"],
+        ]);
+
+        foreach ($data["ordered_ids"] as $index => $productId) {
+            Product::where("id", $productId)->update([
+                "order_number" => $index + 1,
+            ]);
+        }
+
+        Session::flash("success", "Urutan produk berhasil diperbarui");
+        return Inertia::location(route("product.order-list.index"));
     }
 }
